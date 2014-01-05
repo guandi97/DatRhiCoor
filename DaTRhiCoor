@@ -1,0 +1,75 @@
+#! /bin/zsh
+
+#Guandi97
+#micropenguin.net
+
+function help
+{
+	echo -e DaTRhiCoor: Data to Rhino Coordinates!
+	awk 'BEGIN {printf("usage: %s [-flags] <filenmae>\n","DaTRhiCoor")}'
+	echo -e "flags:\n\t-r\tadd rhino commands\n\t-n\tdon't add commands"
+	awk 'BEGIN {print "the game"}'
+	exit
+}
+
+c=0
+if [[ $# -lt 2 ]] 
+then
+	help
+fi
+while getopts "h?nr" opt
+do
+	case $opt in
+		h|\?)
+			help;;
+		n)
+			c=0;;
+		r)
+			c=1;;
+	esac		
+done
+if [[ ! ( -a $2 ) ]]
+then
+	echo "file '$2' not found"
+else
+	if [[ -z $3 ]]
+	then
+		3="output"
+	fi	
+	if [[ $c -eq 1 ]]
+	then
+		echo !interpCrv | tee $3
+	fi
+
+	feof=0
+	i=0
+	linA=$(wc -l $2 | tr ' ' '\n' | grep -e '^\d')
+	linB=$(echo -e $linA | awk '{print $1*2}')
+
+	stream=$(cat $2 | tr ' ' '\n' | grep -e '^\d\|^-\d')
+	for i in {1..$linA..2}
+	do
+		let "j = i+1"
+		echo -e $stream | sed -n "${i}p" | tr '\n' ',' | tee -a $3
+		echo -e $stream | sed -n "${j}p" | tee -a $3
+	done
+	if [[ $c -eq 1 ]]
+	then
+		echo -e 'enter\ninterpCrv' | tee -a $3
+	fi
+	let "linA = linA+1"
+	for i in {$linA..$linB..2}
+	do
+		let "j = i+1"
+		echo -e $stream | sed -n "${i}p" | tr '\n' ',' | tee -a $3
+		echo -e $stream | sed -n "${j}p" | tee -a $3
+	done
+	if [[ $c -eq 1 ]]
+	then
+		echo -e enter | tee -a $3
+	fi	
+	
+	echo -e "\ndone: $linB lines parsed"
+	
+fi
+exit
