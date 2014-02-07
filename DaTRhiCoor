@@ -6,7 +6,7 @@
 function help
 {
 	echo -e DaTRhiCoor: Data to Rhino Coordinates!
-	awk 'BEGIN {printf("usage: %s [-flags] <filenmae>\n","DaTRhiCoor")}'
+	awk 'BEGIN {printf("usage: %s [-flags] <filenmae> [output name]\n","DaTRhiCoor")}'
 	echo -e "flags:\n\t-r\tadd rhino commands\n\t-n\tdon't add commands"
 	awk 'BEGIN {print "the game"}'
 	exit
