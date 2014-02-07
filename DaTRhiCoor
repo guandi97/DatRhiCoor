@@ -45,7 +45,7 @@ else
 
 	feof=0
 	i=0
-	linA=$(wc -l $2 | tr ' ' '\n' | grep -e '^\d')
+	linA=$(wc -l $2 | tr ' ' '\n' | grep -e '^\d' | head -1)
 	linB=$(echo -e $linA | awk '{print $1*2}')
 	stream=$(cat $2 | grep -v '^\w' | tr ' ' '\n' | grep -e '^\d\|^-\d')
 
