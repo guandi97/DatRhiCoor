@@ -48,6 +48,8 @@ else
 	linA=$(wc -l $2 | tr ' ' '\n' | grep -e '^\d\|^-\d' | head -1)
 	linB=$(echo -e $linA | awk '{print $1*2}')
 	stream=$(cat $2 | grep -v '^\w' | tr ' ' '\n' | grep -e '^\d\|^-\d')
+	echo -e linA: $linA
+	echo -e linB: $linB
 
 	for i in {1..$linA..2}
 	do
@@ -60,6 +62,11 @@ else
 		echo -e 'enter\ninterpCrv' | tee -a $3
 	fi
 	let "linA = linA+1"
+	if [[ $linA%2 != 0 ]]
+	then
+		echo asdfasdfasdf
+		let "linA = lineA+1"
+	fi
 	for i in {$linA..$linB..2}
 	do
 		let "j = i + 1"
