@@ -64,7 +64,6 @@ else
 	let "linA = linA+1"
 	if [[ $linA%2 != 0 ]]
 	then
-		echo asdfasdfasdf
 		let "linA = lineA+1"
 	fi
 	for i in {$linA..$linB..2}
