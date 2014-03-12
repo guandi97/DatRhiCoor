@@ -1,0 +1,40 @@
+#! /bin/zsh
+
+#Guandi97
+#micropenguin.net
+
+function help
+{
+	echo -e mutiCoor: multiple coordinate formater for DatRhiCoor
+	awk 'BEGIN{printf("usage: zsh %s [flags] <file>\nflags:\n",mutiCoor)}'
+	exit
+} 
+
+if [[ $# -le 0 ]]
+then
+	help
+elif [[ $# -le 1 ]]
+then
+	file=$1
+else
+	while getopts "h?" opt
+	do
+		case $opt in
+			h|\?)
+				help;;
+		esac
+	done
+	file=$2
+fi
+
+if [[ ! (-a $file) ]]
+then
+	echo "file $file not found"
+else
+	len=$(wc -l $file | tr ' ' '\n' | grep '^\d')
+
+	for i in {1..$len..1}
+	do
+		cat $file | sed -n "${i}p" | xargs zsh DatRhiCoor
+	done
+fi
